@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 require('dotenv').config();
 
-mongoose.connect(process.env.MONGO_URL);
-
+mongoose.connect(process.env.MONGO_URI); // 👈 yeh line fix karni thi
 
 mongoose.connection.on('error', (err) => {
     console.error('❌ MongoDB Connection Error:', err);
@@ -16,7 +15,4 @@ mongoose.connection.on('disconnected', () => {
     console.warn('⚠️ Disconnected from MongoDB');
 });
 
-
-
-// Export mongoose for use in models
 module.exports = mongoose;
