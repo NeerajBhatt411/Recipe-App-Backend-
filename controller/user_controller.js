@@ -1,6 +1,8 @@
 const User = require('../model/user_model');
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken");
+
 require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
@@ -136,11 +138,17 @@ const verifyOTP = async (req, res) => {
     user.otp = undefined;
     user.otpExpiry = undefined;
 
-    await user.save(); // save the updated user 
+    await user.save(); 
+    
+    // save the updated user 
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '30d' // ya '7d' based on use-case
+    });
 
     res.status(200).json({
       success: true,
-      message: "OTP verified successfully"
+      message: "OTP verified successfully",
+      token:token
     });
   }
   catch (err) {
@@ -248,7 +256,11 @@ const resetPassword = async (req, res) => {
   user.otpExpiry = undefined;
   await user.save();
 
-  res.status(200).json({ message: "Password reset successful" });
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    expiresIn: '30d' // ya '7d' based on use-case
+  });
+
+  res.status(200).json({ message: "Password reset successful", token:token });
 };
 
 
@@ -284,11 +296,13 @@ const login = async (req, res) => {
 
     // if we want to genrate the jwt token we can genrate here the jwt 
 
-    // const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '30d' // ya '7d' based on use-case
+    });
 
     res.status(200).json({
       message: "Login successful",
-      // token: token,
+      token: token,
       user: {
         id: user._id,
         name: user.name,
