@@ -79,7 +79,7 @@ register = async (req, res) => {
         </div>
       `
     });
-    res.status(201).json({ message: 'User registered. Please verify OTP sent to email.' });
+    res.status(201).json({ message: 'User registered. Please verify OTP sent to email.', email:user.email });
   }
   catch (err) {
     console.error("Registration error:", err);
