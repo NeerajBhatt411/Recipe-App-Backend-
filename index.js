@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors")
 const db = require("./db");
 const appRoutes = require("./routes/app_routes")
+const recipeRoutes = require("./routes/recipie_routes")
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
  
@@ -14,6 +16,8 @@ app.get("/", (req,res)=>{
     res.send("Hey, This is Recepie App ");
 })
 app.use('/v1/api', appRoutes); 
+app.use('/v1/api', recipeRoutes); 
+
 
 
 
