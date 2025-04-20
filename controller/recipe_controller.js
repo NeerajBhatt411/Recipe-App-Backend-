@@ -46,7 +46,7 @@ const postRecipe = async (req, res) => {
 
 const getRecipe = async (req, res) => {
     try {
-        const recipes = await recipeModel.find();
+        const recipes = await recipeModel.find().sort({createdAt:-1});
 
         if (!recipes || recipes.length === 0) {
             return res.status(404).json({

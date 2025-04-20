@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     otp: { type: String }, // OTP for verification
     otpExpiry: { type: Date }, // Expiry time for OTP
     isVerified: { type: Boolean, default: false } // Email verification status
-});
+},{timestamps:true});
 
 const User = mongoose.model('User', UserSchema);
 
