@@ -6,8 +6,8 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "recipes", // Folder name in Cloudinary
-    // allowed_formats: ["jpg", "jpeg", "png"],
-    public_id: (req, file) => {
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+        public_id: (req, file) => {
         return file.originalname.split(".")[0] + "-" + Date.now();
     }
   }
