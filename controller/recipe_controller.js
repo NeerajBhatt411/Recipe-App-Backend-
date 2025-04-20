@@ -11,9 +11,9 @@ const postRecipe = async (req, res) => {
         }
 
         // Check if file exists in the request
-        // if (!req.file) {
-        //     return res.status(400).json({ message: "Image file is required", success: false });
-        // }
+        if (!req.file) {
+            return res.status(400).json({ message: "Image file is required", success: false });
+        }
 
         const imageUrl = req.file.path; // Now safe to access
 
